@@ -49,13 +49,12 @@ app.post('/', function (req, res) {
   var id_len = 8;
   var paste_id = '';
   var rchar;
-  for (var i = 0; i < id_len; i += 0) {
+  for (var i = 0; i < id_len; i += 1) {
     rchar = Math.floor(Math.random() * chars.length);
     paste_id += chars[rchar];
   }
 
   console.log(paste_id);
-  console.log(req.body.paste);
   db.saveDoc(paste_id, {
     date: new Date(),
     body: req.body.paste
@@ -65,7 +64,7 @@ app.post('/', function (req, res) {
     } else {
       res.header('Content-Type', 'text/plain');
       
-      res.send('http://paste.totallymike.info/?d=' + paste_id, 201);
+      res.send('http://paste.totallymike.info/?d=' + paste_id + '\n', 201);
     }
   });
 });
