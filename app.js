@@ -3,7 +3,6 @@
  * Module dependencies.
  */
 
-var profiler = require('v8-profiler');
 var express = require('express')
   , routes = require('./routes');
 var couchdb = require('felix-couchdb');
@@ -17,12 +16,12 @@ var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 // Configuration
 
 app.configure(function(){
-  // app.set('views', __dirname + '/views');
-  // app.set('view engine', 'jade');
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  // app.use(app.router);
-  // app.use(express.static(__dirname + '/public'));
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
 });
 
 
@@ -39,12 +38,25 @@ app.error(function(err, req, res, next) {
 });
 // Routes
 
-
-app.all('/', function(req, res, next) {
-  console.log('request');
-  next();
+app.get('/$', function (req, res) {
+  res.render('index');
+  res.end();
 });
-app.get('/', routes.index);
+
+app.get('/paste/:id', function (req, res) {
+  db.getDoc(req.params.id, function (err, data) {
+    res.render('paste', { 
+      'bin': data.body,
+      'scripts':
+        ['/javascripts/shCore.js', '/javascripts/shBrushPlain.js'],
+      'styles':
+        ['/stylesheets/shCore.css', '/stylesheets/shThemeDefault.css']
+      });
+  });
+});
+  
+  
+  //routes.index);
 app.post('/', function (req, res) {
   var id_len = 8;
   var paste_id = '';
@@ -64,7 +76,7 @@ app.post('/', function (req, res) {
     } else {
       res.header('Content-Type', 'text/plain');
       
-      res.send('http://paste.totallymike.info/?d=' + paste_id + '\n', 201);
+      res.send('http://paste.totallymike.info/paste/' + paste_id + '\n', 201);
     }
   });
 });

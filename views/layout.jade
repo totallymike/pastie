@@ -1,6 +1,12 @@
 !!!
 html
   head
-    title= title
+    title tmPaste
+    if typeof scripts !== 'undefined'
+      each script in scripts
+        script(src=script)
+    if typeof styles !== 'undefined'
+      each style in styles
+        link(href=style, rel="stylesheet", type="text/css")
     link(rel='stylesheet', href='/stylesheets/style.css')
   body!= body
