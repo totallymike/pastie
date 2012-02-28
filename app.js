@@ -101,7 +101,7 @@ app.post('/', function (req, res) {
     } else {
       res.header('Content-Type', 'text/plain');
       
-      res.send('http://paste.totallymike.info/paste/' + paste_id + '\n', 201);
+      res.send('http://paste.totallymike.info/?' + paste_id + '\n', 201);
     }
   });
 });
