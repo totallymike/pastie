@@ -61,15 +61,19 @@ app.get('/', function (req, res, next) {
     var brush = req.param('lang') ? req.param('lang') : 'plain';
     var scripts = ['/javascripts/shCore.js', '/javascripts/' + brush];
     db.getDoc(req.param('p'), function (err, data) {
-      res.render('paste', { 
-        'bin': data.body,
-        'scripts':
-          ['/javascripts/shCore.js', '/javascripts/' + brushScripts[brush]],
-        'brush':
-          brush,
-        'styles':
-          ['/stylesheets/shCore.css', '/stylesheets/shThemeDefault.css']
+      if (err) {
+        res.render('paste_error', { error: err });
+      } else {
+        res.render('paste', { 
+          'bin': data.body,
+          'scripts':
+            ['/javascripts/shCore.js', '/javascripts/' + brushScripts[brush]],
+          'brush':
+            brush,
+          'styles':
+            ['/stylesheets/shCore.css', '/stylesheets/shThemeDefault.css']
         });
+      }
     });
   } else {
     next();
