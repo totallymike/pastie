@@ -1,9 +1,22 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.8"
-    , "hbs": ">= 1.0.1"
-  }
+  "author": "Michael Westbom <totallymike@gmail.com> (http://github.com/totallymike)",
+  "name": "paste",
+  "description": "A very useful sprunge.us clone written in node",
+  "version": "0.0.1",
+  "homepage": "http://github.com/totallymike/pastebin_clone",
+  "bin": {"paste": "./app.js"},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/totallymike/pastebin_clone.git"
+  },
+  "main": "app.js",
+  "engines": {
+    "node": "~0.6.11"
+  },
+  "dependencies": {
+    "express": "2.5.8",
+    "felix-couchdb": "1.0.3"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
 }
