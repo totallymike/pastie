@@ -4,8 +4,8 @@
  */
 
 var fs      = require('fs');
-var express = require('express')
-  , routes = require('./routes');
+var express = require('express'),
+    routes = require('./routes');
 var couchdb = require('felix-couchdb');
 
 var config = {};
