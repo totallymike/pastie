@@ -3,12 +3,16 @@
  * Module dependencies.
  */
 
+var fs      = require('fs');
 var express = require('express')
   , routes = require('./routes');
 var couchdb = require('felix-couchdb');
 
-var client = couchdb.createClient(5984, 'localhost');
-var db = client.db('pastebin');
+var config = {};
+config = JSON.parse(fs.readFileSync(process.env.HOME + '/.pasterc'));
+
+var client = couchdb.createClient(config.couchPort, config.couchAddress);
+var db = client.db(config.dbName);
 
 var app = module.exports = express.createServer();
 
