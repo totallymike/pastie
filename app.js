@@ -42,23 +42,44 @@ app.error(function(err, req, res, next) {
 });
 // Routes
 
+var brushScripts = {
+  'plain'   : 'shBrushPlain.js',
+  'js'      : 'shBrushJScript.js',
+  'c'       : 'shBrushCpp.js',
+  'cpp'     : 'shBrushCpp.js',
+  'java'    : 'shBrushJava.js',
+  'pl'      : 'shBrushPerl.js',
+  'perl'    : 'shBrushPerl.js',
+  'html'    : 'shBrushXml.js',
+  'xml'     : 'shBrushXml.js',
+  'xhtml'   : 'shBrushXml.js'
+};
+
+
+app.get('/', function (req, res, next) {
+  if (req.param('p')) {
+    var brush = req.param('lang') ? req.param('lang') : 'plain';
+    var scripts = ['/javascripts/shCore.js', '/javascripts/' + brush];
+    db.getDoc(req.param('p'), function (err, data) {
+      res.render('paste', { 
+        'bin': data.body,
+        'scripts':
+          ['/javascripts/shCore.js', '/javascripts/' + brushScripts[brush]],
+        'brush':
+          brush,
+        'styles':
+          ['/stylesheets/shCore.css', '/stylesheets/shThemeDefault.css']
+        });
+    });
+  } else {
+    next();
+  }
+});
+  
 app.get('/$', function (req, res) {
   res.render('index');
   res.end();
 });
-
-app.get('/paste/:id', function (req, res) {
-  db.getDoc(req.params.id, function (err, data) {
-    res.render('paste', { 
-      'bin': data.body,
-      'scripts':
-        ['/javascripts/shCore.js', '/javascripts/shBrushPlain.js'],
-      'styles':
-        ['/stylesheets/shCore.css', '/stylesheets/shThemeDefault.css']
-      });
-  });
-});
-  
   
   //routes.index);
 app.post('/', function (req, res) {
