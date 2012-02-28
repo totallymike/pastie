@@ -14,7 +14,8 @@
     "node": "~0.6.11"
   },
   "dependencies": {
-    "express": "2.5.8"
+    "express": "2.5.8",
+    "felix-couchdb": "1.0.3"
   },
   "devDependencies": {},
   "optionalDependencies": {}
