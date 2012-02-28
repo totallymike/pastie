@@ -58,7 +58,7 @@ var brushScripts = {
 
 app.get('/', function (req, res, next) {
   if (req.param('p')) {
-    var brush = req.param('lang') ? req.param('lang') : 'plain';
+    var brush = (typeof brushScripts(req.param('lang')) !== 'undefined') ? req.param('lang') : 'plain';
     var scripts = ['/javascripts/shCore.js', '/javascripts/' + brush];
     db.getDoc(req.param('p'), function (err, data) {
       if (err) {
