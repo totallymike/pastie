@@ -64,15 +64,19 @@ app.get('/', function (req, res, next) {
       if (err) {
         res.render('paste_error', { error: err });
       } else {
-        res.render('paste', { 
-          'bin': data.body,
-          'scripts':
-            ['/javascripts/shCore.js', '/javascripts/' + brushScripts[brush]],
-          'brush':
-            brush,
-          'styles':
-            ['/stylesheets/shCore.css', '/stylesheets/shThemeDefault.css']
-        });
+        if (req.param('raw')) {
+          res.send(data.body, {'Content-Type': 'text/plain'});
+        } else {
+          res.render('paste', { 
+            'bin': data.body,
+            'scripts':
+              ['/javascripts/shCore.js', '/javascripts/' + brushScripts[brush]],
+            'brush':
+              brush,
+            'styles':
+              ['/stylesheets/shCore.css', '/stylesheets/shThemeDefault.css']
+          });
+        }
       }
     });
   } else {
