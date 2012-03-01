@@ -49,6 +49,7 @@ app.error(function(err, req, res, next) {
 
 var brushScripts = {
   'plain'   : 'shBrushPlain.js',
+  'bash'    : 'shBrushBash.js',
   'js'      : 'shBrushJScript.js',
   'c'       : 'shBrushCpp.js',
   'cpp'     : 'shBrushCpp.js',
@@ -88,7 +89,11 @@ app.get('/', function (req, res, next) {
     next();
   }
 });
-  
+
+app.get('/langs', function (req, res) {
+  res.render('langs', { 'brushes': brushScripts });
+});
+
 app.get('/$', function (req, res) {
   res.render('index');
   res.end();
