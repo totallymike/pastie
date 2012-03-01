@@ -19,11 +19,6 @@ var app = module.exports = express.createServer();
 var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 // Configuration
 
-process.env.IRC_NODE_PATH = process.env.HOME + '/pastebin/ircnode';
-process.env.IRC_NODE_DEBUG = false;
-
-var irc = require('ircnode');
-
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -121,8 +116,6 @@ app.post('/', function (req, res) {
 
       res.header('Content-Type', 'text/plain');
       res.send(addr + '\n', 201);
-
-      irc.privmsg(irc.config.chan, 'New pastebin: ' + addr);
     }
   });
 });
